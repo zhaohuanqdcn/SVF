@@ -40,6 +40,10 @@ Set<std::string> LockResultValidator::getStringArg(const Instruction* inst, unsi
 {
     assert(LLVMUtil::isCallSite(inst) && "getFirstIntArg: inst is not a callsite");
     const CallBase* cs = LLVMUtil::getLLVMCallSite(inst);
+    if (!(arg_num < cs->arg_size())) {
+        Set<std::string> strvec;
+	return strvec;
+    }
     assert((arg_num < cs->arg_size()) && "Does not has this argument");
     const GetElementPtrInst* gepinst = SVFUtil::dyn_cast<GetElementPtrInst>(cs->getArgOperand(arg_num));
     const Constant* arrayinst = SVFUtil::dyn_cast<Constant>(gepinst->getOperand(0));

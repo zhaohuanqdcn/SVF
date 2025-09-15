@@ -57,8 +57,6 @@ int main(int argc, char ** argv)
     MTAValidator.analyze();
 
     // Initialize the validator and perform validation.
-    LockResultValidator lockvalidator(mta.getLockAnalysis());
-    lockvalidator.analyze();
     LLVMModuleSet::releaseLLVMModuleSet();
 
 

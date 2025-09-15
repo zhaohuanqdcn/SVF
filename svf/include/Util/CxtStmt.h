@@ -146,10 +146,8 @@ public:
     {
         if (tid != rhs.getTid())
             return tid < rhs.getTid();
-        else if(inst!=rhs.getStmt())
+        else 
             return inst < rhs.getStmt();
-        else
-            return cxt < rhs.getContext();
     }
     /// Overloading operator=
     inline CxtThreadStmt& operator= (const CxtThreadStmt& rhs)
@@ -164,7 +162,7 @@ public:
     /// Overloading operator==
     inline bool operator== (const CxtThreadStmt& rhs) const
     {
-        return (tid == rhs.getTid() && inst == rhs.getStmt() && cxt == rhs.getContext());
+        return (tid == rhs.getTid() && inst == rhs.getStmt());
     }
     /// Overloading operator==
     inline bool operator!= (const CxtThreadStmt& rhs) const
@@ -215,10 +213,7 @@ public:
     /// to be noted that two vectors can also overload operator()
     inline bool operator< (const CxtThread& rhs) const
     {
-        if (forksite != rhs.getThread())
-            return forksite < rhs.getThread();
-        else
-            return cxt < rhs.getContext();
+        return forksite < rhs.getThread();
     }
     /// Overloading operator=
     inline CxtThread& operator= (const CxtThread& rhs)
@@ -233,7 +228,7 @@ public:
     /// Overloading operator==
     inline bool operator== (const CxtThread& rhs) const
     {
-        return (forksite == rhs.getThread() && cxt == rhs.getContext());
+        return (forksite == rhs.getThread());
     }
     /// Overloading operator==
     inline bool operator!= (const CxtThread& rhs) const
@@ -418,10 +413,8 @@ public:
     {
         if (tid != rhs.getTid())
             return tid < rhs.getTid();
-        else if(fun!=rhs.getProc())
+        else 
             return fun < rhs.getProc();
-        else
-            return cxt < rhs.getContext();
     }
     /// Overloading operator=
     inline CxtThreadProc& operator= (const CxtThreadProc& rhs)
@@ -437,7 +430,7 @@ public:
     /// Overloading operator==
     inline bool operator== (const CxtThreadProc& rhs) const
     {
-        return (tid == rhs.getTid() && fun == rhs.getProc() && cxt == rhs.getContext());
+        return (tid == rhs.getTid() && fun == rhs.getProc());
     }
     /// Overloading operator==
     inline bool operator!= (const CxtThreadProc& rhs) const
@@ -458,10 +451,10 @@ private:
 // Specialise has for class defined in this header file
 template <> struct std::hash<SVF::CxtThread>
 {
-    size_t operator()(const SVF::CxtThread& cs) const
+    size_t operator()(const SVF::CxtThread& cs) const 
     {
-        std::hash<SVF::CallStrCxt> h;
-        return h(cs.getContext());
+        const void* ptr = static_cast<const void*>(cs.getThread());
+        return std::hash<const void*>()(ptr);
     }
 };
 template <> struct std::hash<SVF::CxtThreadProc>

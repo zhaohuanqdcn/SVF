@@ -32,6 +32,7 @@
 
 #include "MTA/TCT.h"
 #include "Util/SVFUtil.h"
+
 namespace SVF
 {
 
@@ -179,12 +180,16 @@ private:
     }
     inline void addInterleavingThread(const CxtThreadStmt& tgr, const CxtThreadStmt& src)
     {
-        bool changed = threadStmtToTheadInterLeav[tgr] |= threadStmtToTheadInterLeav[src];
-        if(changed)
-        {
-            instToTSMap[tgr.getStmt()].insert(tgr);
-            pushToCTSWorkList(tgr);
-        }
+	if (tgr == src) { return; }
+	auto src_inter = threadStmtToTheadInterLeav[src]; 
+	if (!src_inter.empty()) {
+		bool changed = threadStmtToTheadInterLeav[tgr] |= src_inter;
+		if(changed)
+		{
+		    instToTSMap[tgr.getStmt()].insert(tgr);
+		    pushToCTSWorkList(tgr);
+		}
+	}
     }
     inline void rmInterleavingThread(const CxtThreadStmt& tgr, const NodeBS& tids, const SVFInstruction* joinsite)
     {

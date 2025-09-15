@@ -33,6 +33,7 @@
 #include "MTA/LockAnalysis.h"
 #include "Util/SVFUtil.h"
 #include "Util/PTAStat.h"
+#include "Graphs/VFGNode.h"
 
 using namespace SVF;
 using namespace SVFUtil;
@@ -358,6 +359,16 @@ void MHP::handleRet(const CxtThreadStmt& cts)
  */
 void MHP::handleIntra(const CxtThreadStmt& cts)
 {
+//    bool has_ls = false;
+//    for (auto node : cts.getStmt()->getVFGNodes()) {
+//	   if (LoadVFGNode::classof(node) || StoreVFGNode::classof(node)) {
+//		has_ls = true;
+//		break;
+//	   }
+//    }
+//
+//    if (!has_ls) { return; }
+
 
     const InstVec& nextInsts = cts.getStmt()->getSuccInstructions();
     for (const auto& ni: nextInsts)

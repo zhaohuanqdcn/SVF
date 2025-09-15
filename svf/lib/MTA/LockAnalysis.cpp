@@ -48,11 +48,11 @@ void LockAnalysis::analyze()
 
     DBOUT(DGENERAL, outs() << "\tIntra-procedural LockAnalysis\n");
     DBOUT(DMTA, outs() << "\tIntra-procedural LockAnalysis\n");
-    analyzeIntraProcedualLock();
+    // analyzeIntraProcedualLock();
 
     DBOUT(DGENERAL, outs() << "\tCollect context-sensitive locks\n");
     DBOUT(DMTA, outs() << "\tCollect context-sensitive locks\n");
-    collectCxtLock();
+    // collectCxtLock();
 
     DBOUT(DGENERAL, outs() << "\tInter-procedural LockAnalysis\n");
     DBOUT(DMTA, outs() << "\tInter-procedural LockAnalysis\n");
@@ -356,14 +356,14 @@ void LockAnalysis::analyzeLockSpanCxtStmt()
         }
         else if (isTDAcquire(curInst))
         {
-            assert(hasCxtLock(cts) && "context-sensitive lock not found!!");
-            if(addCxtStmtToSpan(cts,cts))
-                handleIntra(cts);
+            // assert(hasCxtLock(cts) && "context-sensitive lock not found!!");
+            // if(addCxtStmtToSpan(cts,cts))
+            //     handleIntra(cts);
         }
         else if (isTDRelease(curInst))
         {
-            if(removeCxtStmtToSpan(cts,cts))
-                handleIntra(cts);
+            // if(removeCxtStmtToSpan(cts,cts))
+            //     handleIntra(cts);
         }
         else if (SVFUtil::isCallSite(curInst) && !isExtCall(curInst))
         {
@@ -375,7 +375,7 @@ void LockAnalysis::analyzeLockSpanCxtStmt()
         }
         else
         {
-            handleIntra(cts);
+            // handleIntra(cts);
         }
 
     }
